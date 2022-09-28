@@ -22,8 +22,7 @@ for d in ls_of_dicts:
     for letter, number in d.items():
         if letter in full_dict.keys():
             if number <= full_dict[letter]:
-                full_dict.update({letter+"_"+ind: full_dict[letter]})
-                full_dict.pop(letter)
+                pass
             else:
                 full_dict.update({letter+"_"+ind: number})
                 full_dict.pop(letter)
