@@ -28,5 +28,5 @@ for d in ls_of_dicts:
                 full_dict.pop(letter)
         else:
             full_dict.update({letter: number})
-print(number_of_dict, ls_of_dicts)
+
 print(full_dict)
