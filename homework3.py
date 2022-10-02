@@ -1,5 +1,3 @@
-import re
-
 primary_sentence = '''homEwork:
 	tHis iz your homeWork, copy these Text to variable. 
 
