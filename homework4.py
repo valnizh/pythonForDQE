@@ -42,14 +42,14 @@ def merge_dicts(ls_of_dicts):
     print(full_dict)
 
 
-ls_of_dicts = create_dicts(2, 10)
-merge_dicts(ls_of_dicts)
+# ls_of_dicts = create_dicts(2, 10)
+# merge_dicts(ls_of_dicts)
 
 
 # homework3
-def count_whitespaces(primary_sentence: str) -> int:
-    all_symbols = len(primary_sentence)  # count all symbols in the text
-    all_words = primary_sentence.split()  # get a list of only words and punctuation
+def count_whitespaces(sentence: str) -> int:
+    all_symbols = len(sentence)  # count all symbols in the text
+    all_words = sentence.split()  # get a list of only words and punctuation
     words_count = 0  # set count of not_whitespaces to 0
     for i in all_words:  # count number of symbols in list of words
         words_count += len(i)
@@ -57,43 +57,44 @@ def count_whitespaces(primary_sentence: str) -> int:
     return number_of_whitespaces
 
 
-def fix_sentence_beginning(norm_sentence):
-    for ind, symbol in enumerate(norm_sentence):  # using enumerate to get letter and its index
+def fix_sentence_beginning(sentence):
+    result = sentence
+    for ind, symbol in enumerate(sentence):  # using enumerate to get letter and its index
         if symbol == '.':  # checking for '.'
-            while (not norm_sentence[ind].isalpha()) and ind < len(
-                    norm_sentence) - 1:  # searching for letter after '.' and checking for an end of string
+            next_ind = 0
+            while (not sentence[ind].isalpha()) and ind < len(sentence) - 1:  # searching for letter after '.' and checking for an end of string
                 ind += 1  # index of a letter after '.'
                 next_ind = ind + 1  # index of next letter for further concatenation
-            norm_sentence = norm_sentence[0:ind] + norm_sentence[ind].upper() + norm_sentence[next_ind:]  # concatenation of string before letter + letter in upper case + rest of the string
-    return norm_sentence
+            result = result[0:ind] + sentence[ind].upper() + sentence[next_ind:]  # concatenation of string before letter + letter in upper case + rest of the string
+    return result
 
 
-def normalize_sentence(primary_sentence):
-    low_sentence = primary_sentence.lower()
+def normalize_sentence(sentence):
+    low_sentence = sentence.lower()
     norm_sentence = low_sentence.capitalize()  # making first letter upper case
-    fix_sentence_beginning(norm_sentence)
+    norm_sentence = fix_sentence_beginning(norm_sentence)
     return norm_sentence
 
 
-def last_words(norm_sentence):
-    last_words = []  # empty list for last words of sentences
-    all_words = norm_sentence.split()
+def get_last_words(sentence):
+    result = []  # empty list for last words of sentences
+    all_words = sentence.split()
     for word in all_words:  # using earlier split list of all words in lower case to find words that end with '.'
         if word.endswith(('.', '!', '?', '...')):
-            last_words.append(word[:-1])  # adding word to list
-    return last_words
+            result.append(word[:-1])  # adding word to list
+    return result
 
 
-def last_word_sentence(norm_sentence):
-    last_words(norm_sentence)
+def last_word_sentence(sentence):
+    last_words = get_last_words(sentence)
     last_sentence = ' '.join(last_words) + '.'  # joining word in list with ' ' and concatenating with '.' at the end
     last_sentence = last_sentence.capitalize()  # making first letter upper case
-    new_sentence = norm_sentence + '\n    ' + last_sentence  # adding new sentence in the same style
+    new_sentence = sentence + '\n\t' + last_sentence  # adding new sentence in the same style
     return new_sentence
 
 
-def fix_iz(new_sentence):
-    right_sentence = new_sentence.replace(' iz ', ' is ')
+def fix_iz(sentence):
+    right_sentence = sentence.replace(' iz ', ' is ')
     return right_sentence
 
 primary_sentence = '''homEwork:
