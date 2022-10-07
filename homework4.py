@@ -1,9 +1,9 @@
 # homework2
+import random
+import string
+
 
 def create_dicts(min_count, max_count) -> list:
-    import random
-    import string
-
     # create a list of random number of dicts (from 2 to 10)
     number_of_dict = random.randint(min_count, max_count)  # randomly choose number of dicts in a list
     ls_of_dicts = []  # empty list
@@ -20,30 +20,31 @@ def create_dicts(min_count, max_count) -> list:
     return ls_of_dicts
 
 
-def add_dicts(d, ind, full_dict):
-    for letter, number in d.items():                                 # iterating through key,value in dict
-        if letter in full_dict.keys():                               # checking if we already have key in full_dict
-            if number <= full_dict[letter]:                          # checking if current number smaller than in full_dict
-                pass                                                 # skip it
-            else:                                                    # current number is bigger
-                new_letter = letter+"_"+ind
-                full_dict.update({new_letter: number})           # update key,value; add to key index of dict
-                full_dict.pop(letter)                                # remove pair with smaller value
-        else:                                                        # if key is not in full_dict
-            full_dict.update({letter: number})                       # add key, value pair
-    return full_dict, ind
+def compare_numbers(letter: str, number: int, ind: int, result: dict):
+    if letter in result.keys():  # checking if we already have key in full_dict
+        if number <= result[letter]:  # checking if current number smaller than in full_dict
+            pass  # skip it
+        else:  # current number is bigger
+            result.update({letter + "_" + ind: number})  # update key,value; add to key index of dict
+            result.pop(letter)  # remove pair with smaller value
+    else:  # if key is not in full_dict
+        result.update({letter: number})  # add key, value pair
+    return letter, number, ind, result
 
 
-def merge_dicts(ls_of_dicts):
-    full_dict = {}  # empty resulting dict
-    for d in ls_of_dicts:  # iterating through dicts
-        ind = str(ls_of_dicts.index(d) + 1)  # saving index of dict for updating full_dict key
-        add_dicts(d, ind, full_dict)
-    print(full_dict)
+def merge_dicts(list_of_dicts):
+    result = {}  # empty resulting dict
+    for d in list_of_dicts:  # iterating through dicts
+        ind = str(list_of_dicts.index(d) + 1)  # saving index of dict for updating result dict key
+        for letter, number in d.items():  # iterating through key,value in dict
+            compare_numbers(letter, number, ind, result)
+    return result
 
 
-# ls_of_dicts = create_dicts(2, 10)
-# merge_dicts(ls_of_dicts)
+ls_of_dicts = create_dicts(2, 10)
+print(ls_of_dicts)
+full_dict = merge_dicts(ls_of_dicts)
+print(full_dict)
 
 
 # homework3
@@ -106,10 +107,10 @@ primary_sentence = '''homEwork:
 
 	last iz TO calculate nuMber OF Whitespace characteRS in this Text. caREFULL, not only Spaces, but ALL whitespaces. I got 87.
 '''
-norm_sentence = normalize_sentence(primary_sentence)
-new_sentence = last_word_sentence(norm_sentence)
-right_sentence = fix_iz(new_sentence)
-print(right_sentence)
-number_of_whitespaces = count_whitespaces(primary_sentence)
-print(f'\n Number of whitespaces is {number_of_whitespaces}')
+#norm_sentence = normalize_sentence(primary_sentence)
+#new_sentence = last_word_sentence(norm_sentence)
+#right_sentence = fix_iz(new_sentence)
+#print(right_sentence)
+#number_of_whitespaces = count_whitespaces(primary_sentence)
+#print(f'\n Number of whitespaces is {number_of_whitespaces}')
 
