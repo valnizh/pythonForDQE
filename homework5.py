@@ -1,6 +1,5 @@
 import datetime
 
-DEFAULT_PATH = 'newsfeed.txt'
 class Publication:
     NAME = ""
     BODY_PROMPT = ""
@@ -17,16 +16,15 @@ class Publication:
 
     def write_file(self, path):
         lines = [
-            '\n',
             self.header.ljust(self.DEVIDER_SIZE, '-'),
             self.body,
             self.footer,
-            ''.ljust(self.DEVIDER_SIZE, '-')
+            ''.ljust(self.DEVIDER_SIZE, '-'),
+            '\n'
         ]
         with open(path, 'a+') as f:
-            f.write('\n')
             f.write('\n'.join(lines))
-
+            f.write('\n')
 
 
 class News(Publication):
@@ -103,7 +101,7 @@ def open_news_feed(path):
         pub.write_file(path)
 
 
-path = input('What path to file? [newsfeed.txt] ')
+path = input('What path to file? (E.g. newsfeed.txt) ')
 open_news_feed(path)
 
 
