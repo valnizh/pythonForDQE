@@ -16,6 +16,7 @@ class Publication:
 
 
 class News(Publication):
+
     BODY_PROMPT = "What happened? "
     FOOTER_PROMPT = "Where happened? "
     FOOTER_TPL = "{}, {}"
@@ -45,6 +46,23 @@ class PrivateAdd(Publication):
         return f'{delta} days'
 
 
+class Weather(Publication):
+    BODY_PROMPT = "What`s the weather(sunny/cloudy/rain? "
+    FOOTER_PROMPT = "Temperature is: "
+    FOOTER_TPL = "Temperature: {}, feels like {}"
+
+    def __init__(self):
+        super().__init__()
+        feels = self._suggest_temperature()
+        self._create_footer(self.footer_input, feels)
+
+    def _suggest_temperature(self):
+        if self.body == 'sunny':
+            return int(self.footer_input) + 4
+        elif self.body == 'rain':
+            return int(self.footer_input) - 2
+        return self.footer_input
+
 
 
 
@@ -57,6 +75,3 @@ class PrivateAdd(Publication):
     #
     # I want to add = ''')
 
-pub = PrivateAdd()
-print(pub.body)
-print(pub.footer)
